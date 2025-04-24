@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Forge Viewer</title>
+  <script src="https://developer.api.autodesk.com/modelderivative/v2/viewers/7.*/viewer3D.min.js"></script>
+  <link rel="stylesheet" href="https://developer.api.autodesk.com/modelderivative/v2/viewers/7.*/style.min.css" />
+  <style>
+    html, body, #forgeViewer { width: 50%; height: 50%; margin: 0; overflow: hidden; }
+  </style>
+</head>
+<body>
+  <div id="forgeViewer"></div>
+  <script>
+    async function launchViewer() {
+      const res = await fetch('/token');
+      const { access_token, urn } = await res.json();
+
+      const options = {
+        env: 'AutodeskProduction',
+        accessToken: access_token
+      };
+
+      Autodesk.Viewing.Initializer(options, () => {
+        const viewer = new Autodesk.Viewing.GuiViewer3D(document.getElementById('forgeViewer'));
+        viewer.start();
+        const documentId = 'urn:' + urn;
+        Autodesk.Viewing.Document.load(documentId, doc => {
+          const defaultModel = doc.getRoot().getDefaultGeometry();
+          viewer.loadDocumentNode(doc, defaultModel);
+        }, console.error);
+      });
+    }
+
+    launchViewer();
+  </script>
+</body>
+</html>

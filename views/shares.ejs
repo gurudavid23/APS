@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Your Shares</title>
+</head>
+<body>
+  <h1>Welcome, <%= user.name %></h1>
+  <h2>App ID: <%= app.id %></h2>
+
+  <form method="POST" action="/shares">
+    <label>URN:</label><br>
+    <input type="text" name="urn" required><br><br>
+    <label>Description:</label><br>
+    <input type="text" name="description" maxlength="512"><br><br>
+    <button type="submit">Create Share</button>
+  </form>
+
+  <h2>Your Shares:</h2>
+  <ul>
+    <% shares.forEach(share => { %>
+      <li>
+        <strong><%= share.description %></strong> — <code><%= share.urn %></code><br>
+        Shared At: <%= new Date(share.created).toLocaleString() %><br>
+        Share Code: <code><%= share.code %></code>
+        <form method="POST" action="/shares/<%= share.id %>?_method=DELETE" style="margin-top:5px;">
+          <button type="submit">Delete</button>
+        </form>
+      </li>
+    <% }) %>
+  </ul>
+</body>
+</html>
