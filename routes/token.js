@@ -22,7 +22,7 @@ router.get('/token', cors(), async (req, res, next) => {
         curl.stderr.on('data', err => console.error('stderr:', err.toString()));
         curl.on('close', () => {
             const token = JSON.parse(data);
-            token.urn = 'dXJuOmFkc2sub2JqZWN0czpvcy5vYmplY3Q6eHBhYmhiOWswZnBqc2l4a3BhOG53aWczZ2pmOXZueG4ydXlka2E1emV3dzA2ZDF6LWJhc2ljLWFwcC9QODQubndk'; // example URN
+            token.urn = 'dXJuOmFkc2sub2JqZWN0czpvcy5vYmplY3Q6eHBhYmhiOWswZnBqc2l4a3BhOG53aWczZ2pmOXZueG4ydXlka2E1emV3dzA2ZDF6LWJhc2ljLWFwcC9WMjAubndk'; // example URN
             res.json(token);
         });
 
